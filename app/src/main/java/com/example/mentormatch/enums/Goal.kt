@@ -1,4 +1,4 @@
-package com.example.mentormatch.enum
+package com.example.mentormatch.enums
 
 enum class Objetivo {
     COMUNICAR_MELHOR,
