@@ -3,6 +3,7 @@ package com.example.mentormatch
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
+import android.widget.RadioButton
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -29,6 +30,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -82,6 +84,9 @@ fun Greeting(){
         }
         var age = remember {
             mutableStateOf("0")
+        }
+        var typeUser =  remember {
+            mutableStateOf(0)
         }
         var technologyListState = remember {
             mutableStateListOf<String>()
@@ -177,6 +182,33 @@ fun Greeting(){
             Spacer(modifier = Modifier
                 .height(16.dp)
             )
+            Text(
+                text = "Tipo de Perfil",
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp
+            )
+            Row(modifier = Modifier
+                .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+            ){
+                RadioButton(
+                    selected = typeUser.value == 0,
+                    onClick = {
+                              typeUser.value = 0
+                    },
+                )
+                Text(text="Mentor")
+                RadioButton(
+                    selected = typeUser.value == 1,
+                    onClick = {
+                        typeUser.value = 1
+                    },
+                )
+                Text(text="Aprendiz")
+            }
+            Spacer(modifier = Modifier
+                .height(16.dp)
+            )
             TextField(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -252,7 +284,7 @@ fun Greeting(){
             {
                 Button(
                     onClick = {
-                        val user:User = User(nome.value, age.value.toInt(), isMale.value, description.value, goal.value, technologyListState.toTypedArray(), softSkillListState.toTypedArray())
+                        val user:User = User(nome.value, age.value.toInt(), isMale.value, typeUser.value, description.value, goal.value, technologyListState.toTypedArray(), softSkillListState.toTypedArray())
                         Log.d("Usuário criado", "User: " + user.toString())
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Blue),

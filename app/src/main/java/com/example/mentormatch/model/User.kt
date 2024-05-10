@@ -4,6 +4,7 @@ data class User(
     val name: String = "",
     val age: Int = 0,
     val gender: Boolean = false,
+    val typeUser: Int = 0,
     val description : String = "",
     val goal : String = "",
     val technologies : Array<String> = arrayOf<String>(),
