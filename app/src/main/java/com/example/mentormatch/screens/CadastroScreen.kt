@@ -37,10 +37,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.mentormatch.enums.SoftSkill
 import com.example.mentormatch.enums.Technology
 import com.example.mentormatch.ui.theme.MentorMatchTheme
@@ -275,14 +275,16 @@ fun CadastroScreen(navController: NavHostController) {
                     Text(text="Criar perfil")
                 }
                 OutlinedButton(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        navController.navigate("login")
+                    },
                     border = BorderStroke(
                         width = 2.dp,
                         color = Color.Red
                     )
                 )
                 {
-                    Text(color = Color.Red, text="Voltar")
+                    Text(color = Color.Red, text="Voltar tela de login")
                 }
             }
 
@@ -330,5 +332,17 @@ fun SoftSkillChip(softSkillListState : SnapshotStateList<String>){
             },
             selected = softskill.name in softSkillListState,
         )
+    }
+}
+
+@Preview(
+    name = "PreviewCadastroScreen",
+    showBackground = true
+)
+@Composable
+fun PreviewCadastroScreen() {
+    MentorMatchTheme {
+        val navController = rememberNavController()
+        CadastroScreen(navController)
     }
 }

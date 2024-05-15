@@ -10,6 +10,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mentormatch.screens.CadastroScreen
+import com.example.mentormatch.screens.LoginScreen
+import com.example.mentormatch.screens.MatchScreen
 import com.example.mentormatch.ui.theme.MentorMatchTheme
 
 class MainActivity : ComponentActivity() {
@@ -25,9 +27,11 @@ class MainActivity : ComponentActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = "cadastro"
+                        startDestination = "login"
                     ){
-                        composable("cadastro") { CadastroScreen(navController) }
+                        composable("login") { LoginScreen(navController = navController)}
+                        composable("cadastro") { CadastroScreen(navController = navController)}
+                        composable("TelaDeBusca") { MatchScreen(navController = navController)}
                     }
                 }
             }

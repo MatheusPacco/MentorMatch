@@ -46,22 +46,20 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.mentormatch.R
 import com.example.mentormatch.enums.SoftSkill
 import com.example.mentormatch.enums.Technology
 import com.example.mentormatch.model.User
 import com.example.mentormatch.repository.getAllUsers
+import com.example.mentormatch.ui.theme.MentorMatchTheme
 
-@Preview(
-    name = "PreviewMatchScreen",
-    showSystemUi = true,
-    heightDp = 2000
-)
 @Composable
-fun PreviewMatchScreen(navController: NavHostController) {
+fun MatchScreen(navController: NavHostController) {
     Surface {
         var searchTextState = remember {
             mutableStateOf("")
@@ -152,11 +150,18 @@ fun PreviewMatchScreen(navController: NavHostController) {
         }
     }
 }
-
 @Preview(
     name = "PreviewUserCard",
     showBackground = true
 )
+@Composable
+fun PreviewUserCard(){
+    Surface {
+        val user = getAllUsers()[0];
+        UserCard(user)
+    }
+}
+
 @Composable
 fun UserCard(user:User){
     Card (
@@ -409,21 +414,17 @@ fun filterUserListBySoftSkill(softSkillListState: SnapshotStateList<String>, lis
     }
 }
 
-//fun filterUserList(, softSkillListState : SnapshotStateList<String>): List<User>{
-//    val listUser:List<User> = getAllUsers();
-//    Log.d("Lista Usuários", listUser.toString());
-//
-//    val usersFilteredByTechnology = listUser.filter { user ->
-//        Log.d("Usuário", user.toString());
-//        Log.d("Filtro de tecnologia", technologyListState.toList().toString())
-//
-//        val tecnologyFound:List<String> = user.technologies.filter { tecnology ->
-//            tecnology in technologyListState.toList()
-//        }
-//
-//        tecnologyFound.size == technologyListState.size
-//    }
-//
-//}
+@Preview(
+    name = "PreviewMatchScreen",
+    showBackground = true,
+    heightDp = 2000
+)
+@Composable
+fun PreviewMatchScreen(){
+    MentorMatchTheme {
+        var navController = rememberNavController()
+        MatchScreen(navController)
+    }
+}
 
 

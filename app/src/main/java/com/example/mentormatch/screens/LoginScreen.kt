@@ -35,7 +35,7 @@ fun LoginScreen(navController: NavController) {
             color = Color.White
         )
         Button(
-            onClick = { navController.navigate("menu") },
+            onClick = { navController.navigate("cadastro") },
             colors = ButtonDefaults.buttonColors(Color.White),
             modifier = Modifier.align(Alignment.Center)
         ) {
