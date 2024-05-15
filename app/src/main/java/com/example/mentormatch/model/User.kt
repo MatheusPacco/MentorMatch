@@ -1,15 +1,20 @@
 package com.example.mentormatch.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "tbl_user")
 data class User(
-    val name: String = "",
-    val age: Int = 0,
-    val gender: Boolean = false,
-    val typeUser: Int = 0,
-    val description : String = "",
-    val goal : String = "",
-    val technologies : Array<String> = arrayOf<String>(),
-    val softSkills : Array<String> = arrayOf<String>(),
-    val active : Boolean = true
+    @PrimaryKey( autoGenerate = true ) var id : Long = 0,
+    var name: String = "",
+    var age: Int = 0,
+    var gender: Boolean = false,
+    var typeUser: Int = 0,
+    var description : String = "",
+    var goal : String = "",
+    var technologies : MutableList<String> = mutableListOf<String>(),
+    var softSkills : MutableList<String> = mutableListOf<String>(),
+    var active : Boolean = true
 )
 
 //    áreasDeExperiência: Lista das áreas em que o mentor tem experiência ou expertise.

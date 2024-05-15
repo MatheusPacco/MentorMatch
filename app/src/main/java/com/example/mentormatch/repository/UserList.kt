@@ -10,8 +10,8 @@ fun getAllUsers(): List<User> {
         typeUser = 0,
         description = "Estudante de engenharia interessada em aprender programação.",
         goal = "Aprender desenvolvimento web e mobile.",
-        technologies = arrayOf("HTML", "JAVA", "JAVASCRIPT"),
-        softSkills = arrayOf("COMUNICACAO", "TRABALHO_EM_EQUIPE"),
+        technologies = mutableListOf<String>("HTML", "JAVA", "JAVASCRIPT"),
+        softSkills = mutableListOf<String>("COMUNICACAO", "TRABALHO_EM_EQUIPE"),
         active = true
     )
 
@@ -22,8 +22,8 @@ fun getAllUsers(): List<User> {
         typeUser = 0,
         description = "Estudante de design gráfico buscando conhecimento em UX/UI.",
         goal = "Dominar ferramentas de design e desenvolvimento de interfaces.",
-        technologies = arrayOf("Adobe Illustrator", "Figma"),
-        softSkills = arrayOf("Criatividade", "TRABALHO_EM_EQUIPE"),
+        technologies = mutableListOf<String>("Adobe Illustrator", "Figma"),
+        softSkills = mutableListOf<String>("Criatividade", "TRABALHO_EM_EQUIPE"),
         active = true
     )
 
@@ -34,8 +34,8 @@ fun getAllUsers(): List<User> {
         typeUser = 0,
         description = "Professora de história interessada em aprender programação para criar recursos educacionais interativos.",
         goal = "Desenvolver aplicativos e jogos educacionais.",
-        technologies = arrayOf("PYTHON", "Unity"),
-        softSkills = arrayOf("TRABALHO_EM_EQUIPE", "RESOLUCAO_DE_PROBLEMAS"),
+        technologies = mutableListOf<String>("PYTHON", "Unity"),
+        softSkills = mutableListOf<String>("TRABALHO_EM_EQUIPE", "RESOLUCAO_DE_PROBLEMAS"),
         active = true
     )
 
@@ -46,8 +46,8 @@ fun getAllUsers(): List<User> {
         typeUser = 0,
         description = "Estudante do ensino médio com interesse em ciência de dados.",
         goal = "Aplicar análise de dados em projetos de pesquisa.",
-        technologies = arrayOf("KOTLIN", "JAVA"),
-        softSkills = arrayOf("RESOLUCAO_DE_PROBLEMAS", "Pensamento analítico"),
+        technologies = mutableListOf<String>("KOTLIN", "JAVA"),
+        softSkills = mutableListOf<String>("RESOLUCAO_DE_PROBLEMAS", "Pensamento analítico"),
         active = true
     )
 
@@ -58,8 +58,8 @@ fun getAllUsers(): List<User> {
         typeUser = 0,
         description = "Profissional de marketing buscando habilidades em marketing digital.",
         goal = "Dominar estratégias de marketing online.",
-        technologies = arrayOf("KOTLIN", "SEO"),
-        softSkills = arrayOf("RESOLUCAO_DE_PROBLEMAS", "Comunicação persuasiva"),
+        technologies = mutableListOf<String>("KOTLIN", "SEO"),
+        softSkills = mutableListOf<String>("RESOLUCAO_DE_PROBLEMAS", "Comunicação persuasiva"),
         active = true
     )
 
@@ -70,8 +70,8 @@ fun getAllUsers(): List<User> {
         typeUser = 1, // Tipo 1 para mentor
         description = "Desenvolvedor full-stack com mais de 10 anos de experiência.",
         goal = "Compartilhar conhecimento e ajudar outros a crescer na carreira de programação.",
-        technologies = arrayOf("Java", "Kotlin", "Spring Boot", "Angular"),
-        softSkills = arrayOf("Liderança", "Mentoria"),
+        technologies = mutableListOf<String>("Java", "Kotlin", "Spring Boot", "Angular"),
+        softSkills = mutableListOf<String>("Liderança", "Mentoria"),
         active = true
     )
 
@@ -82,8 +82,8 @@ fun getAllUsers(): List<User> {
         typeUser = 1,
         description = "Designer de experiência do usuário com foco em acessibilidade e usabilidade.",
         goal = "Auxiliar designers iniciantes a melhorar suas habilidades e entender os princípios de UX/UI.",
-        technologies = arrayOf("Adobe XD", "Sketch", "InVision"),
-        softSkills = arrayOf("Empatia", "Comunicação clara"),
+        technologies = mutableListOf<String>("Adobe XD", "Sketch", "InVision"),
+        softSkills = mutableListOf<String>("Empatia", "Comunicação clara"),
         active = true
     )
 
@@ -94,8 +94,8 @@ fun getAllUsers(): List<User> {
         typeUser = 1,
         description = "Engenheiro de dados especializado em big data e análise preditiva.",
         goal = "Orientar profissionais interessados em entrar no campo de ciência de dados e big data.",
-        technologies = arrayOf("Hadoop", "Spark", "Python", "SQL"),
-        softSkills = arrayOf("Resolução de problemas", "Comunicação eficaz"),
+        technologies = mutableListOf<String>("Hadoop", "Spark", "Python", "SQL"),
+        softSkills = mutableListOf<String>("Resolução de problemas", "Comunicação eficaz"),
         active = true
     )
 
@@ -106,8 +106,8 @@ fun getAllUsers(): List<User> {
         typeUser = 1,
         description = "Especialista em marketing digital com experiência em estratégias de SEO e mídias sociais.",
         goal = "Ajudar empreendedores e profissionais de marketing a desenvolver estratégias digitais eficazes.",
-        technologies = arrayOf("Google Ads", "Facebook Ads", "SEO"),
-        softSkills = arrayOf("Criatividade", "Análise de mercado"),
+        technologies = mutableListOf<String>("Google Ads", "Facebook Ads", "SEO"),
+        softSkills = mutableListOf<String>("Criatividade", "Análise de mercado"),
         active = true
     )
 
@@ -118,8 +118,8 @@ fun getAllUsers(): List<User> {
         typeUser = 1,
         description = "Gestor de projetos com vasta experiência em liderança de equipes de desenvolvimento de software.",
         goal = "Guiar jovens gerentes de projeto no caminho do sucesso e eficácia na entrega de projetos.",
-        technologies = arrayOf("Scrum", "Kanban", "Jira"),
-        softSkills = arrayOf("Liderança", "Gestão de conflitos"),
+        technologies = mutableListOf<String>("Scrum", "Kanban", "Jira"),
+        softSkills = mutableListOf<String>("Liderança", "Gestão de conflitos"),
         active = true
     )
 
