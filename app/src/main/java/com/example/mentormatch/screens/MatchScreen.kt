@@ -53,6 +53,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mentormatch.R
+import com.example.mentormatch.components.softSkilllist
+import com.example.mentormatch.components.tecnologylist
 import com.example.mentormatch.database.repository.InviteMatchRepository
 import com.example.mentormatch.database.repository.UserRepository
 import com.example.mentormatch.enums.SoftSkill
@@ -168,7 +170,7 @@ fun MatchScreen(navController: NavHostController, idUser: String) {
     showBackground = true
 )
 @Composable
-fun PreviewUserCard(){
+fun PreviewUserCardPendingInviteMatch(){
     Surface {
         val user = getAllUsers()[0];
         val currentUser = User(
@@ -315,56 +317,6 @@ fun UserCard(user:User, currentUser: User, inviteMatchRepository:  InviteMatchRe
                     Text(color = Color.Gray, text="Passar")
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun tecnologylist(listTecnology:MutableList<String>){
-    Row (
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ){
-        listTecnology.forEach { tecnology ->
-            AssistChip(
-                modifier = Modifier
-                    .height(24.dp),
-                onClick = { /*TODO*/ },
-                label = {
-                    Text(
-                        text = "$tecnology",
-                        fontSize = 10.sp,
-                        fontWeight = MaterialTheme.typography.bodySmall.fontWeight,
-                        color = MaterialTheme.typography.bodySmall.color
-                    )
-                },
-                colors =  AssistChipDefaults.assistChipColors(Color.Blue, labelColor = Color.LightGray),
-                border =  AssistChipDefaults.assistChipBorder(borderColor = Color.LightGray)
-            )
-        }
-    }
-}
-
-@Composable
-fun softSkilllist(softSkillList:MutableList<String>){
-    Row (
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ){
-        softSkillList.forEach { softSkill ->
-            AssistChip(
-                modifier = Modifier
-                    .height(24.dp),
-                onClick = { /*TODO*/ },
-                label = {
-                    Text(
-                        text = SoftSkill.valueOf(softSkill).titulo,
-                        fontSize = 10.sp,
-                        fontWeight = MaterialTheme.typography.bodySmall.fontWeight,
-                        color = MaterialTheme.typography.bodySmall.color
-                    )
-                },
-                colors =  AssistChipDefaults.assistChipColors(Color.Blue, labelColor = Color.LightGray),
-                border =  AssistChipDefaults.assistChipBorder(borderColor = Color.LightGray)
-            )
         }
     }
 }

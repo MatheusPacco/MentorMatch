@@ -18,7 +18,16 @@ class InviteMatchRepository (context : Context){
     fun excluir(inviteMatch: InviteMatch): Int{
         return db.excluir(inviteMatch);
     }
-    fun buscarInvateMatch(usuarioId : Long): InviteMatch {
-        return db.buscarInvateMatch(usuarioId);
+    fun buscarInviteMatch(usuarioId : Long): InviteMatch {
+        return db.buscarInviteMatch(usuarioId);
     }
+
+    fun buscarInviteMatchPorMentorId(mentorId : Long):List<InviteMatch>{
+        return db.buscarInviteMatchPorMentorId(mentorId);
+    }
+
+    fun buscarInviteMatchPorAprendizId(aprendizId : Long):List<InviteMatch>{
+        return db.buscarInviteMatchPorMentorId(aprendizId);
+    }
+
 }
