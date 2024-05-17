@@ -7,9 +7,11 @@ import androidx.room.PrimaryKey
 data class User(
     @PrimaryKey( autoGenerate = true ) var id : Long = 0,
     var name: String = "",
+    var email: String = "",
+    var password: String = "",
     var age: Int = 0,
-    var gender: Boolean = false,
-    var typeUser: Int = 0,
+    var gender: String = "",
+    var typeUser: String = "",
     var description : String = "",
     var goal : String = "",
     var technologies : MutableList<String> = mutableListOf<String>(),

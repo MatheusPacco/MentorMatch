@@ -33,9 +33,9 @@ fun CriarUsuario(){
                     name = "Pedro Amaral Arrudas",
                     age = 21,
                     description = "Cabeçudoc chatão",
-                    gender = false,
+                    gender = "Feminino",
                     goal = "Bobão",
-                    typeUser = 0,
+                    typeUser = "Aprendiz",
                     technologies = mutableListOf<String>("JAVA"),
                     softSkills = mutableListOf<String>("Sabe Conversa +-"),
                 )
@@ -46,9 +46,9 @@ fun CriarUsuario(){
                     name = "Letícia Esqueci",
                     age = 21,
                     description = "Mulher",
-                    gender = false,
+                    gender = "Feminino",
                     goal = "Não é bobona",
-                    typeUser = 1,
+                    typeUser = "Mentor",
                     technologies = mutableListOf<String>("Photoshop, Adobe Premier"),
                     softSkills = mutableListOf<String>("Ansiedade Social"),
                 )

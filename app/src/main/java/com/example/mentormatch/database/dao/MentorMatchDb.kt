@@ -31,7 +31,7 @@ abstract class MentorMatchDb : RoomDatabase(){
                         "mentor_match_db"
                     )
                     .allowMainThreadQueries()
-                    .fallbackToDestructiveMigration() // Destruir o BD a cada instância
+                    // .fallbackToDestructiveMigration() // Destruir o BD a cada instância
                     .build()
             }
             return instance

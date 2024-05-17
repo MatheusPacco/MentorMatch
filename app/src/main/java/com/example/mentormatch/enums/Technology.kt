@@ -1,10 +1,10 @@
 package com.example.mentormatch.enums
 
-enum class Technology {
-    JAVA,
-    KOTLIN,
-    PYTHON,
-    JAVASCRIPT,
+enum class Technology (var titulo:String){
+    JAVA("Java"),
+    KOTLIN("Kotlin"),
+    PYTHON("Python"),
+    JAVASCRIPT("JavaScript"),
 //    C_SHARP,
 //    GO,
 //    RUBY,

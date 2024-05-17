@@ -43,6 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,15 +53,25 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mentormatch.R
+import com.example.mentormatch.database.repository.InviteMatchRepository
+import com.example.mentormatch.database.repository.UserRepository
 import com.example.mentormatch.enums.SoftSkill
 import com.example.mentormatch.enums.Technology
+import com.example.mentormatch.model.InviteMatch
 import com.example.mentormatch.model.User
 import com.example.mentormatch.repository.getAllUsers
 import com.example.mentormatch.ui.theme.MentorMatchTheme
 
 @Composable
-fun MatchScreen(navController: NavHostController) {
+fun MatchScreen(navController: NavHostController, idUser: String) {
     Surface {
+        val context = LocalContext.current
+        val userRepository = UserRepository(context)
+        val inviteMatchRepository = InviteMatchRepository(context)
+
+        var currentUser:User = userRepository.buscarUsuarioPeloId(idUser.toLong())
+        Log.d("Usuário do contexto",  currentUser.toString())
+
         var searchTextState = remember {
             mutableStateOf("")
         }
@@ -145,7 +156,9 @@ fun MatchScreen(navController: NavHostController) {
             }
 
             userListState.value.forEach{ user ->
-                UserCard(user);
+                if(user.typeUser != currentUser.typeUser){
+                    UserCard(user, currentUser, inviteMatchRepository, userRepository);
+                }
             }
         }
     }
@@ -158,15 +171,30 @@ fun MatchScreen(navController: NavHostController) {
 fun PreviewUserCard(){
     Surface {
         val user = getAllUsers()[0];
-        UserCard(user)
+        val currentUser = User(
+            name = "Maria",
+            age = 25,
+            gender = "Masculino",
+            typeUser = "Aprendiz",
+            description = "Professora de história interessada em aprender programação para criar recursos educacionais interativos.",
+            goal = "Desenvolver aplicativos e jogos educacionais.",
+            technologies = mutableListOf<String>(Technology.JAVASCRIPT.name, Technology.PYTHON.name),
+            softSkills = mutableListOf<String>(SoftSkill.COMUNICACAO.name,SoftSkill.TRABALHO_EM_EQUIPE.name),
+            active = true
+        );
+
+        val context = LocalContext.current
+        val inviteMatchRepository = InviteMatchRepository(context);
+        val userRepository = UserRepository(context)
+        UserCard(user,  currentUser, inviteMatchRepository, userRepository)
     }
 }
 
 @Composable
-fun UserCard(user:User){
+fun UserCard(user:User, currentUser: User, inviteMatchRepository:  InviteMatchRepository, userRepository: UserRepository){
     Card (
         modifier = Modifier
-            .height(164.dp)
+            .height(216.dp)
             .fillMaxWidth(),
 
      ) {
@@ -241,7 +269,36 @@ fun UserCard(user:User){
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ){
                 Button(
-                    onClick = { TODO() },
+                    onClick = {
+                        try{
+                            var userId = userRepository.salvar(user);
+                            var inviteMatch: InviteMatch? = null;
+                            if(user.typeUser == "Aprendiz"){
+                                 inviteMatch = InviteMatch(
+                                    aprendizId = userId,
+                                    mentorId = currentUser.id,
+                                    mentorConfirmado = true,
+                                    aprendizConfirmado = false,
+                                    inviteStatus = "Pendente Aprovação do Aprendiz"
+                                )
+                            }else{
+                                 inviteMatch = InviteMatch(
+                                    aprendizId = currentUser.id,
+                                    mentorId = userId,
+                                    mentorConfirmado = false,
+                                    aprendizConfirmado = true,
+                                    inviteStatus = "Pendente Aprovação do Mentor"
+                                )
+                            }
+
+                            Log.d("Invite Match criado: ", inviteMatch.toString())
+                            if (inviteMatch != null) {
+                                inviteMatchRepository.salvar(inviteMatch)
+                            }
+                        }catch(e:Exception){
+                            Log.e("Erro na criação do registro de Invite Match", e.toString())
+                        }
+                    },
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Gray),
                 )
                 {
@@ -299,7 +356,7 @@ fun softSkilllist(softSkillList:MutableList<String>){
                 onClick = { /*TODO*/ },
                 label = {
                     Text(
-                        text = "$softSkill",
+                        text = SoftSkill.valueOf(softSkill).titulo,
                         fontSize = 10.sp,
                         fontWeight = MaterialTheme.typography.bodySmall.fontWeight,
                         color = MaterialTheme.typography.bodySmall.color
@@ -423,7 +480,8 @@ fun filterUserListBySoftSkill(softSkillListState: SnapshotStateList<String>, lis
 fun PreviewMatchScreen(){
     MentorMatchTheme {
         var navController = rememberNavController()
-        MatchScreen(navController)
+        var idUser: String = "";
+        MatchScreen(navController, idUser)
     }
 }
 

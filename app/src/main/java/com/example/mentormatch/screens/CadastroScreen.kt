@@ -21,28 +21,39 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.mentormatch.R
+import com.example.mentormatch.database.repository.UserRepository
 import com.example.mentormatch.enums.SoftSkill
 import com.example.mentormatch.enums.Technology
+import com.example.mentormatch.model.User
 import com.example.mentormatch.ui.theme.MentorMatchTheme
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -51,20 +62,23 @@ fun CadastroScreen(navController: NavHostController) {
     Surface (
         modifier = Modifier.fillMaxSize(),
     ){
-        var isMale = remember {
-            mutableStateOf(false)
-        }
-        var isFemale = remember {
-            mutableStateOf(false)
+        val context = LocalContext.current
+        val userRepository = UserRepository(context)
+
+        var genderState = remember{
+            mutableStateOf("Feminino")
         }
         var nome = remember {
+            mutableStateOf("")
+        }
+        var emailState = remember {
             mutableStateOf("")
         }
         var age = remember {
             mutableStateOf("0")
         }
         var typeUser =  remember {
-            mutableStateOf(0)
+            mutableStateOf("Aprendiz")
         }
         var technologyListState = remember {
             mutableStateListOf<String>()
@@ -76,6 +90,15 @@ fun CadastroScreen(navController: NavHostController) {
             mutableStateOf("")
         }
         var description = remember {
+            mutableStateOf("")
+        }
+        var passwordState = remember {
+            mutableStateOf("")
+        }
+        var passwordVisible by remember {
+            mutableStateOf(false)
+        }
+        var error = remember{
             mutableStateOf("")
         }
 
@@ -114,6 +137,22 @@ fun CadastroScreen(navController: NavHostController) {
             TextField(
                 modifier = Modifier
                     .fillMaxWidth(),
+
+                value = emailState.value,
+                onValueChange = { novoValor ->
+                    emailState.value = novoValor
+                },
+                label = {
+                    Text(text = "Digite seu e-mail")
+                },
+                placeholder = {
+                    Text(text = "Digite o seu e-mail")
+                },
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            TextField(
+                modifier = Modifier
+                    .fillMaxWidth(),
                 value = age.value,
                 onValueChange = { novoValor ->
                     age.value = novoValor
@@ -138,20 +177,18 @@ fun CadastroScreen(navController: NavHostController) {
             ){
 
                 Checkbox(
-                    checked = isMale.value,
+                    checked = genderState.value == "Masculino",
                     onCheckedChange = { checked ->
-                        isMale.value = checked
-                        isFemale.value = false
+                        genderState.value = "Masculino"
                     },
                 )
                 Text(
                     text = "Masculino"
                 )
                 Checkbox(
-                    checked = isFemale.value,
+                    checked = genderState.value == "Feminino",
                     onCheckedChange = { checked ->
-                        isFemale.value = checked
-                        isMale.value = false
+                        genderState.value = "Femenino"
                     },
                 )
                 Text(
@@ -172,16 +209,16 @@ fun CadastroScreen(navController: NavHostController) {
                 verticalAlignment = Alignment.CenterVertically,
             ){
                 RadioButton(
-                    selected = typeUser.value == 0,
+                    selected = typeUser.value == "Mentor",
                     onClick = {
-                        typeUser.value = 0
+                        typeUser.value = "Mentor"
                     },
                 )
                 Text(text="Mentor")
                 RadioButton(
-                    selected = typeUser.value == 1,
+                    selected = typeUser.value == "Aprendiz",
                     onClick = {
-                        typeUser.value = 1
+                        typeUser.value = "Aprendiz"
                     },
                 )
                 Text(text="Aprendiz")
@@ -258,6 +295,40 @@ fun CadastroScreen(navController: NavHostController) {
             Spacer(modifier = Modifier
                 .height(16.dp)
             )
+            if(error.value != ""){
+                Text(color = Color.Red, text=error.value)
+                Spacer(modifier = Modifier
+                    .height(8.dp)
+                )
+            }
+            TextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = passwordState.value,
+                onValueChange = { novoValor ->
+                    passwordState.value = novoValor
+                },
+                label = { Text("Password") },
+                placeholder = { Text("Password") },
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                trailingIcon = {
+                    val image = if (passwordVisible)
+                        R.drawable.visibility
+                    else R.drawable.visibility_off
+
+                    IconButton(
+                        onClick = {passwordVisible = !passwordVisible}
+                    ){
+                        Icon(
+                            painter = painterResource(id = image),
+                            contentDescription = null
+                        )
+                    }
+                }
+            )
+            Spacer(modifier = Modifier
+                .height(16.dp)
+            )
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -266,8 +337,38 @@ fun CadastroScreen(navController: NavHostController) {
             {
                 Button(
                     onClick = {
-                        // val user:User = User(nome.value, age.value.toInt(), isMale.value, typeUser.value, description.value, goal.value, technologyListState.toTypedArray(), softSkillListState.toTypedArray())
-                        // Log.d("Usuário criado", "User: " + user.toString())
+                        try{
+                            if(technologyListState.toList().isEmpty()){
+                                throw  Throwable("Lista de tecnologias vazia!")
+                            }
+
+                            if(softSkillListState.toList().isEmpty()){
+                                throw  Throwable("Lista de tecnologias vazia!")
+                            }
+
+                            val user:User = User(
+                                name = nome.value,
+                                email = emailState.value,
+                                password = passwordState.value,
+                                age = age.value.toInt(),
+                                gender = genderState.value,
+                                typeUser = typeUser.value,
+                                description = description.value,
+                                goal = goal.value,
+                                technologies = technologyListState.toMutableList(),
+                                softSkills = softSkillListState.toMutableList()
+                            )
+
+                            userRepository.salvar(user);
+
+                            // Jogar usuário para a home Screen
+                            navController.navigate("login")
+
+                            Log.d("Usuário criado", user.toString())
+                        }catch(e:Throwable){
+                            Log.e("Erro para criação de perfil: ",  e.toString())
+                            error.value = e.message!!;
+                        }
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Blue),
                 )
@@ -319,7 +420,7 @@ fun SoftSkillChip(softSkillListState : SnapshotStateList<String>){
     SoftSkill.values().forEach { softskill ->
         FilterChip(
             label = {
-                Text(softskill.name)
+                Text(softskill.titulo)
             },
             onClick = {
                 Log.d("Assist chip", "Name: " + softskill.name)
@@ -337,7 +438,8 @@ fun SoftSkillChip(softSkillListState : SnapshotStateList<String>){
 
 @Preview(
     name = "PreviewCadastroScreen",
-    showBackground = true
+    showBackground = true,
+    heightDp = 2000
 )
 @Composable
 fun PreviewCadastroScreen() {
