@@ -11,12 +11,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.compose.MentorMatchTheme
 import com.example.mentormatch.database.repository.UserRepository
 import com.example.mentormatch.repository.getAllUsers
 import com.example.mentormatch.screens.CadastroScreen
 import com.example.mentormatch.screens.LoginScreen
 import com.example.mentormatch.screens.MatchScreen
-import com.example.mentormatch.ui.theme.MentorMatchTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

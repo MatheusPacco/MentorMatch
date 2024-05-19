@@ -40,10 +40,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.compose.MentorMatchTheme
 import com.example.mentormatch.R
 import com.example.mentormatch.database.repository.UserRepository
 import com.example.mentormatch.model.User
-import com.example.mentormatch.ui.theme.MentorMatchTheme
 
 @Composable
 fun LoginScreen(navController: NavController) {

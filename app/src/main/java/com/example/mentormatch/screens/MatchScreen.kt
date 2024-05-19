@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.compose.MentorMatchTheme
 import com.example.mentormatch.R
 import com.example.mentormatch.components.softSkilllist
 import com.example.mentormatch.components.tecnologylist
@@ -62,7 +63,6 @@ import com.example.mentormatch.enums.Technology
 import com.example.mentormatch.model.InviteMatch
 import com.example.mentormatch.model.User
 import com.example.mentormatch.repository.getAllUsers
-import com.example.mentormatch.ui.theme.MentorMatchTheme
 
 @Composable
 fun MatchScreen(navController: NavHostController, idUser: String) {
