@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "893132644860",
+    "project_id": "mentormatchnotififypush",
+    "storage_bucket": "mentormatchnotififypush.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893132644860:android:0a7a29e0b2d2c3aa6dd279",
+        "android_client_info": {
+          "package_name": "com.example.mentormatch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMsfB0ArWKt-FprWBLnlyNWMvlv_Ckxbk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
