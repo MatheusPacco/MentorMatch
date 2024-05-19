@@ -2,6 +2,7 @@ package com.example.mentormatch.screens
 
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -23,8 +24,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -176,24 +179,25 @@ fun CadastroScreen(navController: NavHostController) {
                 verticalAlignment = Alignment.CenterVertically,
             ){
 
-                Checkbox(
-                    checked = genderState.value == "Masculino",
-                    onCheckedChange = { checked ->
+                RadioButton(
+                    selected = genderState.value == "Masculino",
+                    onClick = {
                         genderState.value = "Masculino"
                     },
+                    colors = if(isSystemInDarkTheme()) RadioButtonDefaults.colors(MaterialTheme.colorScheme.secondary)
+                    else RadioButtonDefaults.colors(MaterialTheme.colorScheme.primary)
                 )
-                Text(
-                    text = "Masculino"
-                )
-                Checkbox(
-                    checked = genderState.value == "Feminino",
-                    onCheckedChange = { checked ->
-                        genderState.value = "Femenino"
+                Text(text="Masculino")
+
+                RadioButton(
+                    selected = genderState.value == "Feminino",
+                    onClick = {
+                        genderState.value = "Feminino"
                     },
+                    colors = if(isSystemInDarkTheme()) RadioButtonDefaults.colors(MaterialTheme.colorScheme.secondary)
+                    else RadioButtonDefaults.colors(MaterialTheme.colorScheme.primary)
                 )
-                Text(
-                    text = "Feminino"
-                )
+                Text(text="Feminino")
             }
             Spacer(modifier = Modifier
                 .height(16.dp)
@@ -213,6 +217,8 @@ fun CadastroScreen(navController: NavHostController) {
                     onClick = {
                         typeUser.value = "Mentor"
                     },
+                    colors = if(isSystemInDarkTheme()) RadioButtonDefaults.colors(MaterialTheme.colorScheme.secondary)
+                    else RadioButtonDefaults.colors(MaterialTheme.colorScheme.primary)
                 )
                 Text(text="Mentor")
                 RadioButton(
@@ -220,6 +226,8 @@ fun CadastroScreen(navController: NavHostController) {
                     onClick = {
                         typeUser.value = "Aprendiz"
                     },
+                    colors = if(isSystemInDarkTheme()) RadioButtonDefaults.colors(MaterialTheme.colorScheme.secondary)
+                    else RadioButtonDefaults.colors(MaterialTheme.colorScheme.primary)
                 )
                 Text(text="Aprendiz")
             }
@@ -307,8 +315,8 @@ fun CadastroScreen(navController: NavHostController) {
                 onValueChange = { novoValor ->
                     passwordState.value = novoValor
                 },
-                label = { Text("Password") },
-                placeholder = { Text("Password") },
+                label = { Text("Digite uma senha") },
+                placeholder = { Text("Digite uma senha") },
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 trailingIcon = {
@@ -333,6 +341,7 @@ fun CadastroScreen(navController: NavHostController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.Start),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
             )
             {
                 Button(
@@ -370,7 +379,7 @@ fun CadastroScreen(navController: NavHostController) {
                             error.value = e.message!!;
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue),
+                    colors = if(isSystemInDarkTheme()) ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary) else ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
                 )
                 {
                     Text(text="Criar perfil")
@@ -379,13 +388,11 @@ fun CadastroScreen(navController: NavHostController) {
                     onClick = {
                         navController.navigate("login")
                     },
-                    border = BorderStroke(
-                        width = 2.dp,
-                        color = Color.Red
-                    )
+                    border = if(isSystemInDarkTheme()) BorderStroke(2.dp, MaterialTheme.colorScheme.secondary)
+                    else BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
                 )
                 {
-                    Text(color = Color.Red, text="Voltar tela de login")
+                    Text(text="Voltar tela de login")
                 }
             }
 

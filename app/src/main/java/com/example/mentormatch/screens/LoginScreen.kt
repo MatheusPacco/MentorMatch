@@ -1,8 +1,11 @@
 package com.example.mentormatch.screens
 
+import android.content.res.Configuration
 import android.util.Log
 import android.widget.Button
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +21,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -62,14 +66,12 @@ fun LoginScreen(navController: NavController) {
 
     Surface (
         modifier = Modifier
-        .fillMaxSize()
-        .background(Color(0xFFED145B))
-        .padding(16.dp),
+            .fillMaxSize()
+            .padding(16.dp),
     ){
         Column(
             modifier = Modifier
-                .fillMaxHeight()
-                .background(Color(0xFFED145B)),
+                .fillMaxHeight(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -77,12 +79,10 @@ fun LoginScreen(navController: NavController) {
                 text = "LOGIN",
                 fontSize = MaterialTheme.typography.headlineLarge.fontSize,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
             )
             Text(
                 text = "Formulário de cadastro",
                 fontSize = 26.sp,
-                color = Color.White
             )
             Spacer(modifier = Modifier.height(16.dp))
             TextField(
@@ -127,7 +127,9 @@ fun LoginScreen(navController: NavController) {
                 }
             )
             Spacer(modifier = Modifier.height(12.dp))
-            Row {
+            Row (
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ){
                 Button(
                     onClick = {
                         var userFind : User? = userRepository.buscarUsuarioPorEmailESenha(emailState.value, passwordState.value)
@@ -138,22 +140,20 @@ fun LoginScreen(navController: NavController) {
                             Log.d("Usuário NÃO encontrado", userFind.toString())
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(Color.White)
+                    colors = if(isSystemInDarkTheme()) ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
+                    else ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
                 ) {
                     Text(
                         text = "Entrar",
                         fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                        color = Color.Blue
                     )
                 }
-                Button(
+                OutlinedButton(
                     onClick = { navController.navigate("cadastro") },
-                    colors = ButtonDefaults.buttonColors(Color.White)
                 ) {
                     Text(
                         text = "Criar uma conta",
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                        color = Color.Blue
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
                     )
                 }
             }
@@ -162,7 +162,7 @@ fun LoginScreen(navController: NavController) {
 }
 @Preview(
     showSystemUi = true,
-    showBackground = true
+    showBackground = true,
 )
 @Composable
 fun LoginScreenPreview() {
