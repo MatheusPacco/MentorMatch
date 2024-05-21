@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -217,7 +218,8 @@ fun UserCard(user:User, currentUser: User, inviteMatchRepository:  InviteMatchRe
                         .height(56.dp),
                 ){
                     Image(
-                        painter = painterResource(id = R.drawable.mentor1),
+                        painter = if(user.typeUser == "Mentor") painterResource(id = R.drawable.obiwan_mentor)
+                        else painterResource(id = R.drawable.luke_aprendiz),
                         contentDescription = null,
                         modifier = Modifier
                             .align(Alignment.Center)
@@ -301,10 +303,11 @@ fun UserCard(user:User, currentUser: User, inviteMatchRepository:  InviteMatchRe
                             Log.e("Erro na criação do registro de Invite Match", e.toString())
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Gray),
+                    colors = if(isSystemInDarkTheme()) ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
+                    else ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
                 )
                 {
-                    Text(color = Color.LightGray, text="Match")
+                    Text(text="Match")
                 }
                 OutlinedButton(
                     onClick = { /*TODO*/ },
