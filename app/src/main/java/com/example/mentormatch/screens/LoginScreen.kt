@@ -63,6 +63,9 @@ fun LoginScreen(navController: NavController) {
     var passwordState = remember {
         mutableStateOf("")
     }
+    var erro = remember {
+        mutableStateOf("")
+    }
 
     Surface (
         modifier = Modifier
@@ -137,6 +140,7 @@ fun LoginScreen(navController: NavController) {
                             Log.d("Usuário encontrado", userFind.toString())
                             navController.navigate("telaDeBusca/${userFind.id.toString()}")
                         }else{
+                            erro.value = "Nenhum usuário encontrado com essas credenciais"
                             Log.d("Usuário NÃO encontrado", userFind.toString())
                         }
                     },
@@ -156,6 +160,12 @@ fun LoginScreen(navController: NavController) {
                         fontSize = MaterialTheme.typography.bodyMedium.fontSize
                     )
                 }
+            }
+            if(erro.value.length > 0){
+                Text(
+                    text = erro.value,
+                    color = MaterialTheme.colorScheme.error
+                )
             }
         }
     }

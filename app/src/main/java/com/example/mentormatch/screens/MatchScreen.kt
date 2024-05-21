@@ -1,5 +1,6 @@
 package com.example.mentormatch.screens
 
+import android.Manifest
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -64,13 +65,19 @@ import com.example.mentormatch.enums.Technology
 import com.example.mentormatch.model.InviteMatch
 import com.example.mentormatch.model.User
 import com.example.mentormatch.repository.getAllUsers
+import com.example.mentormatch.service.notification.NotificationHandler
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberPermissionState
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun MatchScreen(navController: NavHostController, idUser: String) {
     Surface {
         val context = LocalContext.current
         val userRepository = UserRepository(context)
         val inviteMatchRepository = InviteMatchRepository(context)
+        val postNotificationPermission = rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
+        val notificationHandler = NotificationHandler(context)
 
         var currentUser:User = userRepository.buscarUsuarioPeloId(idUser.toLong())
         Log.d("Usuário do contexto",  currentUser.toString())
@@ -160,12 +167,21 @@ fun MatchScreen(navController: NavHostController, idUser: String) {
 
             userListState.value.forEach{ user ->
                 if(user.typeUser != currentUser.typeUser){
-                    UserCard(user, currentUser, inviteMatchRepository, userRepository);
+                    UserCard(user, currentUser, inviteMatchRepository, userRepository, notificationHandler);
                 }
+            }
+
+            Button(
+                onClick = {
+                    navController.navigate("InviteMatchPending/${currentUser.id.toString()}")
+                }
+            ) {
+                Text(text = "Lista de pedidos de matchs pendentes!")
             }
         }
     }
 }
+@OptIn(ExperimentalPermissionsApi::class)
 @Preview(
     name = "PreviewUserCard",
     showBackground = true
@@ -173,6 +189,9 @@ fun MatchScreen(navController: NavHostController, idUser: String) {
 @Composable
 fun PreviewUserCardPendingInviteMatch(){
     Surface {
+        val postNotificationPermission = rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
+        val context = LocalContext.current
+        val notificationHandler = NotificationHandler(context)
         val user = getAllUsers()[0];
         val currentUser = User(
             name = "Maria",
@@ -186,15 +205,14 @@ fun PreviewUserCardPendingInviteMatch(){
             active = true
         );
 
-        val context = LocalContext.current
         val inviteMatchRepository = InviteMatchRepository(context);
         val userRepository = UserRepository(context)
-        UserCard(user,  currentUser, inviteMatchRepository, userRepository)
+        UserCard(user,  currentUser, inviteMatchRepository, userRepository, notificationHandler)
     }
 }
 
 @Composable
-fun UserCard(user:User, currentUser: User, inviteMatchRepository:  InviteMatchRepository, userRepository: UserRepository){
+fun UserCard(user:User, currentUser: User, inviteMatchRepository:  InviteMatchRepository, userRepository: UserRepository, notificationHandler : NotificationHandler){
     Card (
         modifier = Modifier
             .height(216.dp)
@@ -299,6 +317,11 @@ fun UserCard(user:User, currentUser: User, inviteMatchRepository:  InviteMatchRe
                             if (inviteMatch != null) {
                                 inviteMatchRepository.salvar(inviteMatch)
                             }
+
+                            notificationHandler.showSimpleNotification(
+                                "Solicitação de Match enviada com sucesso!",
+                                "Vizualize o status da solicitação na lista de convites pendentes"
+                            )
                         }catch(e:Exception){
                             Log.e("Erro na criação do registro de Invite Match", e.toString())
                         }

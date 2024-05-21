@@ -25,6 +25,6 @@ interface InviteMatchDao {
     @Query("SELECT * FROM tbl_invite_match WHERE mentorId = :mentorId")
     fun buscarInviteMatchPorMentorId(mentorId : Long):List<InviteMatch>
 
-    @Query("SELECT * FROM tbl_invite_match WHERE mentorId = :aprendizId")
+    @Query("SELECT * FROM tbl_invite_match WHERE aprendizId = :aprendizId")
     fun buscarInviteMatchPorAprendizId(aprendizId : Long):List<InviteMatch>
 }

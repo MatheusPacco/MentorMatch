@@ -15,6 +15,7 @@ import com.example.compose.MentorMatchTheme
 import com.example.mentormatch.database.repository.UserRepository
 import com.example.mentormatch.repository.getAllUsers
 import com.example.mentormatch.screens.CadastroScreen
+import com.example.mentormatch.screens.InviteMatchPendingScreen
 import com.example.mentormatch.screens.LoginScreen
 import com.example.mentormatch.screens.MatchScreen
 
@@ -39,6 +40,11 @@ class MainActivity : ComponentActivity() {
                             val idUser: String? = it.arguments?.getString("idUser", "")
                             Log.d("Valor da Rota", idUser!!)
                             MatchScreen(navController = navController, idUser!!)
+                        }
+                        composable("InviteMatchPending/{idUser}") {
+                            val idUser: String? = it.arguments?.getString("idUser", "")
+                            Log.d("Valor da rota de Notificações Pendentes", idUser!!)
+                            InviteMatchPendingScreen(navController = navController, idUser!!)
                         }
                     }
                 }

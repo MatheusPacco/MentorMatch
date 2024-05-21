@@ -1,5 +1,6 @@
 package com.example.mentormatch.screens
 
+import android.Manifest
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -58,8 +59,11 @@ import com.example.mentormatch.database.repository.UserRepository
 import com.example.mentormatch.enums.SoftSkill
 import com.example.mentormatch.enums.Technology
 import com.example.mentormatch.model.User
+import com.example.mentormatch.service.notification.NotificationHandler
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberPermissionState
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalPermissionsApi::class)
 @Composable
 fun CadastroScreen(navController: NavHostController) {
     Surface (
@@ -67,6 +71,8 @@ fun CadastroScreen(navController: NavHostController) {
     ){
         val context = LocalContext.current
         val userRepository = UserRepository(context)
+        val postNotificationPermission = rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
+        val notificationHandler = NotificationHandler(context)
 
         var genderState = remember{
             mutableStateOf("Feminino")
@@ -369,6 +375,11 @@ fun CadastroScreen(navController: NavHostController) {
                             )
 
                             userRepository.salvar(user);
+
+                            notificationHandler.showSimpleNotification(
+                                "Seja bem-vindo!",
+                                "Conta criada com sucesso!"
+                            )
 
                             // Jogar usuário para a home Screen
                             navController.navigate("login")

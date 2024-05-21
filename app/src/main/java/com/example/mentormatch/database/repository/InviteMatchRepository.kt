@@ -27,7 +27,7 @@ class InviteMatchRepository (context : Context){
     }
 
     fun buscarInviteMatchPorAprendizId(aprendizId : Long):List<InviteMatch>{
-        return db.buscarInviteMatchPorMentorId(aprendizId);
+        return db.buscarInviteMatchPorAprendizId(aprendizId);
     }
 
 }

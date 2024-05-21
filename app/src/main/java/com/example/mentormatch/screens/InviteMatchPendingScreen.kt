@@ -58,7 +58,7 @@ fun InviteMatchPendingScreen(navController: NavHostController, idUser: String){
         val inviteMatchRepository = InviteMatchRepository(context)
 
         var currentUser:User = userRepository.buscarUsuarioPeloId(idUser.toLong())
-        Log.d("Usuário do contexto",  currentUser.toString())
+        Log.d("Usuário do contexto: InviteMatchPendingScreen",  currentUser.toString())
 
         var inviteList: List<InviteMatch>? = null;
         if(currentUser.typeUser == "Mentor"){
@@ -124,7 +124,8 @@ fun UserCard(user: User){
                         .height(56.dp),
                 ){
                     Image(
-                        painter = painterResource(id = R.drawable.mentor1),
+                        painter = if(user.typeUser == "Mentor") painterResource(id = R.drawable.obiwan_mentor)
+                        else painterResource(id = R.drawable.luke_aprendiz), 
                         contentDescription = null,
                         modifier = Modifier
                             .align(Alignment.Center)
@@ -174,6 +175,7 @@ fun UserCard(user: User){
                     softSkilllist(user.softSkills)
                 }
             }
+            Text(text = "Status: Pendente aprovação")
         }
     }
 }
